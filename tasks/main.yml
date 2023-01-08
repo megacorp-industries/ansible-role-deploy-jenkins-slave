@@ -14,7 +14,7 @@
     name:
       - packer=1.8.2-1
       - terraform
-    allow_downgrade: yes
+    allow_downgrade: true
     update_cache: yes
 
 - name: Make temporary working directory for packer
