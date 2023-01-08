@@ -1,0 +1,8 @@
+---
+- name: Configure Jenkins Slave VM
+  hosts: localhost
+  gather_facts: True
+  become: yes
+  roles:
+    - ansible-role-generic-setup
+    - ansible-role-install-kvm

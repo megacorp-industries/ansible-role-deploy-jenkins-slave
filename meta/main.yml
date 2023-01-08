@@ -1,0 +1,17 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: deploy-jenkins-slave
+  author: mi
+  description: Deploy Jenkins Slave VM
+  company: "Megacorp Industries"
+  min_ansible_version: 2.4
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
+  galaxy_tags:
+    - server
+    - jenkins
+

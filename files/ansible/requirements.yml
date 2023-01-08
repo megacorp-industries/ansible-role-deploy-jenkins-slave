@@ -1,0 +1,4 @@
+# ansible-galaxy install -r requirements.yml
+- src: https://github.com/megacorp-industries/ansible-role-generic-setup
+
+- src: https://github.com/megacorp-industries/ansible-role-install-kvm

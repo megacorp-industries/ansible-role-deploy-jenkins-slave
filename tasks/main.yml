@@ -1,0 +1,68 @@
+---
+- name: Add Hashicorp GPG key
+  get_url:
+    url: https://apt.releases.hashicorp.com/gpg
+    dest: /etc/apt/trusted.gpg.d/hashicorp.asc
+
+- name: Add Hashicorp repo
+  apt_repository:
+    repo: deb [arch=amd64] https://apt.releases.hashicorp.com focal main
+    state: present
+
+- name: Install Packer and Terraform
+  apt:
+    name:
+      - packer
+      - terraform
+    update_cache: yes
+
+- name: Make temporary working directory for packer
+  file:
+    path: /tmp/packer
+    state: directory
+
+- name: Copy all packer files to new working directory
+  copy:
+    src: files/{{ item }}
+    dest: /tmp/packer
+  loop:
+    - ansible
+    - http
+    - jenkins-slave.pkr.hcl
+
+- name: Build packer image
+  command: packer build .
+  args:
+    chdir: /tmp/packer
+
+- name: Ensure dedicated terraform user exists
+  user:
+    name: terraform
+    state: present
+    shell: /bin/bash
+
+- name: Make working directory for terraform
+  file:
+    path: /home/terraform/jenkins-slave
+    state: directory
+    owner: terraform
+    group: terraform
+ 
+- name: Copy main.tf to terraform working dir
+  copy:
+    src: files/main.tf
+    dest: /home/terraform/jenkins-slave
+    owner: terraform
+    group: terraform
+    mode: "644"
+
+- name: Deploy jenkins slave using terraform
+  terraform:
+    project_path: /home/terraform/jenkins-slave
+    state: present
+    force_init: true
+
+- name: Cleanup packer files
+  file:
+    path: /tmp/packer
+    state: absent
