@@ -39,6 +39,7 @@
 - name: Ensure dedicated terraform user exists
   user:
     name: terraform
+    groups: libvirt
     state: present
     shell: /bin/bash
 
@@ -58,6 +59,7 @@
     mode: "644"
 
 - name: Deploy jenkins slave using terraform
+  become_user: terraform
   terraform:
     project_path: /home/terraform/jenkins-slave
     state: present
