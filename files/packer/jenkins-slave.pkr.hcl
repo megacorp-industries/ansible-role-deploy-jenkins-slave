@@ -1,6 +1,6 @@
 variable "cpu" {
   type    = string
-  default = "2"
+  default = "1"
 }
 
 variable "disk_size" {
@@ -33,16 +33,6 @@ variable "ram" {
   default = "2048"
 }
 
-variable "ssh_password" {
-  type    = string
-  default = "changeme"
-}
-
-variable "ssh_username" {
-  type    = string
-  default = "user"
-}
-
 variable "version" {
   type    = string
   default = ""
@@ -62,7 +52,7 @@ source "qemu" "jenkins-slave" {
   headless               = var.headless
   host_port_max          = 2229
   host_port_min          = 2222
-  http_directory         = "cloud-init"
+  http_directory         = "."
   http_port_max          = 10089
   http_port_min          = 10082
   iso_checksum           = var.iso_checksum
@@ -71,11 +61,11 @@ source "qemu" "jenkins-slave" {
   output_directory       = "artifacts/${var.name}${var.version}"
   qemu_binary            = "/usr/bin/qemu-system-x86_64"
   qemuargs               = [["-m", "${var.ram}M"], ["-smp", "${var.cpu}"]]
-  shutdown_command       = "echo '${var.ssh_password}' | sudo -S shutdown -P now"
+  shutdown_command       = "echo 'changeme' | sudo -S shutdown -P now"
   ssh_handshake_attempts = 500
-  ssh_password           = var.ssh_password
+  ssh_password           = "changeme"
   ssh_timeout            = "45m"
-  ssh_username           = var.ssh_username
+  ssh_username           = "user"
   ssh_wait_timeout       = "45m"
 }
 
