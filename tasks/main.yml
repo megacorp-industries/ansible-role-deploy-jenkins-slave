@@ -24,7 +24,7 @@
 
 - name: Copy all packer files to new working directory
   copy:
-    src: files/{{ item }}
+    src: files/packer/{{ item }}
     dest: /tmp/packer
   loop:
     - ansible
@@ -52,7 +52,7 @@
  
 - name: Copy main.tf to terraform working dir
   copy:
-    src: files/main.tf
+    src: files/terraform/main.tf
     dest: /home/terraform/jenkins-slave
     owner: terraform
     group: terraform

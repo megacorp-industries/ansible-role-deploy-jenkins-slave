@@ -17,15 +17,15 @@ resource "libvirt_pool" "jenkins-slave-pool" {
 }
 resource "libvirt_volume" "jenkins-slave-volume" {
   name   = "jenkins-slave-volume"
-  source = "/tmp/packer/artifacts/jenkins-slave/packer-jenkins-slave"
+  source = "/vagrant/packer-jenkins-slave"
   pool   = libvirt_pool.jenkins-slave-pool.name
   format = "qcow2"
 }
 
 resource "libvirt_domain" "jenkins-slave-domain" {
   name      = "jenkins-slave"
-  memory    = "4096"
-  vcpu      = 2
+  memory    = "1024"
+  vcpu      = 1
   cpu {
     mode = "host-passthrough"
   }
