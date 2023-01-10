@@ -62,7 +62,7 @@ source "qemu" "jenkins-slave" {
   headless               = var.headless
   host_port_max          = 2229
   host_port_min          = 2222
-  http_directory         = "."
+  http_directory         = "cloud-init"
   http_port_max          = 10089
   http_port_min          = 10082
   iso_checksum           = var.iso_checksum
