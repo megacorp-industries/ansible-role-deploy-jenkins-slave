@@ -27,7 +27,7 @@
     src: files/packer
     dest: /tmp
 
-- name: Build packer image
+- name: Build packer image (this will take a while)
   command: packer build .
   args:
     chdir: /tmp/packer
