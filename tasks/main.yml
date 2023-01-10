@@ -24,12 +24,8 @@
 
 - name: Copy all packer files to new working directory
   copy:
-    src: files/packer/{{ item }}
-    dest: /tmp/packer
-  loop:
-    - ansible
-    - http
-    - jenkins-slave.pkr.hcl
+    src: files/packer
+    dest: /tmp
 
 - name: Build packer image
   command: packer build .
