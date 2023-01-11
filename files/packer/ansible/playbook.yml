@@ -11,3 +11,9 @@
     apt:
       name: default-jre
       state: present
+  - name: Create dedicated jenkins user
+    user:
+      name: jenkins
+      groups: libvirt
+      state: present
+      shell: /bin/bash
