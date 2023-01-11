@@ -6,3 +6,8 @@
   roles:
     - ansible-role-generic-setup
     - ansible-role-install-kvm
+  tasks:
+  - name: Install latest version of Java
+    apt:
+      name: default-jre
+      state: present
