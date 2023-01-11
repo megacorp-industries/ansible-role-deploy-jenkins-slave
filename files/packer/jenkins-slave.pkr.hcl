@@ -65,7 +65,7 @@ source "qemu" "jenkins-slave" {
   ssh_handshake_attempts = 500
   ssh_password           = "changeme"
   ssh_timeout            = "45m"
-  ssh_username           = "user"
+  ssh_username           = "dedsec"
   ssh_wait_timeout       = "45m"
 }
 
