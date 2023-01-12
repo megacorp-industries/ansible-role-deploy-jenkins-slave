@@ -58,7 +58,7 @@ source "qemu" "jenkins-slave" {
   iso_checksum           = var.iso_checksum
   iso_url                = var.iso_url
   net_device             = "virtio-net"
-  output_directory       = "/var/lib/libvirt/images/${var.name}${var.version}"
+  output_directory       = "artifacts/${var.name}${var.version}"
   qemu_binary            = "/usr/bin/qemu-system-x86_64"
   qemuargs               = [["-m", "${var.ram}M"], ["-smp", "${var.cpu}"]]
   shutdown_command       = "echo 'changeme' | sudo -S shutdown -P now"
