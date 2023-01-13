@@ -20,7 +20,7 @@
 - name: Check if libvirt images directory is empty
   stat:
     path: /var/lib/libvirt/images
-    register: image_dir_empty
+  register: image_dir_empty
 
 - block:
   - name: Make temporary working directory for packer
