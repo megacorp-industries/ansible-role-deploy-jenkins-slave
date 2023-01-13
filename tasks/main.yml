@@ -37,6 +37,7 @@
     command: packer build .
     args:
       chdir: /tmp/packer
+    register: image_built
 
   - name: Copy packer image to libvirt image directory
     copy:
@@ -50,7 +51,6 @@
       state: absent
 
   when: image_dir_empty == 0
-  register: image_built
 
 - block:
   - name: Ensure dedicated terraform user exists
