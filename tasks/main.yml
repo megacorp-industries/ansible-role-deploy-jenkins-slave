@@ -32,6 +32,11 @@
   args:
     chdir: /tmp/packer
 
+- name: Copy packer image to libvirt image directory
+  copy:
+    src: /tmp/packer/artifacts/jenkins-slave/packer-jenkins-slave
+    dest: /var/lib/libvirt/images
+
 - name: Ensure dedicated terraform user exists
   user:
     name: terraform
