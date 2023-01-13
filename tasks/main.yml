@@ -18,8 +18,8 @@
     update_cache: yes
 
 - name: Check if libvirt images directory is empty
-  stat:
-    path: /var/lib/libvirt/images
+  find:
+    paths: /var/lib/libvirt/images/
   register: image_dir_empty
 
 - block:
@@ -45,7 +45,11 @@
     file:
       path: /tmp/packer
       state: absent
-  when: image_dir_empty == 0
+  - name: Destroy any existing terraform infrastructure
+    terraform:
+      project_path: /home/terraform/jenkins-slave
+      state: absent
+  when: image_dir_empty.matched == 0
 
 - name: Ensure dedicated terraform user exists
   user:
