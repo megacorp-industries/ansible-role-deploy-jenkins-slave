@@ -17,7 +17,7 @@ resource "libvirt_pool" "jenkins-slave-pool" {
 }
 resource "libvirt_volume" "jenkins-slave-volume" {
   name   = "jenkins-slave-volume"
-  source = "/var/lib/libvirt/packer-jenkins-slave"
+  source = "/var/lib/libvirt/images/packer-jenkins-slave"
   pool   = libvirt_pool.jenkins-slave-pool.name
   format = "qcow2"
 }
