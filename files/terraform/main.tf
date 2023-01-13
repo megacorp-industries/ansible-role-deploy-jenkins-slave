@@ -26,6 +26,7 @@ resource "libvirt_domain" "jenkins-slave-domain" {
   name      = "jenkins-slave"
   memory    = "1024"
   vcpu      = 1
+  autostart = true
   cpu {
     mode = "host-passthrough"
   }
