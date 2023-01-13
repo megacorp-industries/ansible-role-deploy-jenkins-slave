@@ -52,39 +52,31 @@
 
   when: image_dir_empty == 0
 
-- block:
-  - name: Ensure dedicated terraform user exists
-    user:
-      name: terraform
-      groups: libvirt
-      state: present
-      shell: /bin/bash
+- name: Ensure dedicated terraform user exists
+  user:
+    name: terraform
+    groups: libvirt
+    state: present
+    shell: /bin/bash
   
-  - name: Make working directory for terraform
-    file:
-      path: /home/terraform/jenkins-slave
-      state: directory
-      owner: terraform
-      group: terraform
-  - name: Copy main.tf to terraform working dir
-    copy:
-      src: files/terraform/main.tf
-      dest: /home/terraform/jenkins-slave
-      owner: terraform
-      group: terraform
-      mode: "644"
-  
-  - name: Destroy jenkins slave using terraform
-    become_user: terraform
-    terraform:
-      project_path: /home/terraform/jenkins-slave
-      state: absent
-    
-  - name: Deploy jenkins slave using terraform
-    become_user: terraform
-    terraform:
-      project_path: /home/terraform/jenkins-slave
-      state: present
-      force_init: true
+- name: Make working directory for terraform
+  file:
+    path: /home/terraform/jenkins-slave
+    state: directory
+    owner: terraform
+    group: terraform
 
-  when: image_built.stdout != "" 
+- name: Copy main.tf to terraform working dir
+  copy:
+    src: files/terraform/main.tf
+    dest: /home/terraform/jenkins-slave
+    owner: terraform
+    group: terraform
+    mode: "644"
+
+- name: Deploy jenkins slave using terraform
+  become_user: terraform
+  terraform:
+    project_path: /home/terraform/jenkins-slave
+    state: present
+    force_init: true
