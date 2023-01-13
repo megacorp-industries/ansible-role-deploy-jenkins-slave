@@ -27,29 +27,24 @@
     file:
       path: /tmp/packer
       state: directory
-
   - name: Copy all packer files to new working directory
     copy:
       src: files/packer
       dest: /tmp
-
   - name: Build packer image (this will take a while)
     command: packer build .
     args:
       chdir: /tmp/packer
     register: image_built
-
   - name: Copy packer image to libvirt image directory
     copy:
       remote_src: true
       src: /tmp/packer/artifacts/jenkins-slave/packer-jenkins-slave
       dest: /var/lib/libvirt/images
-
   - name: Cleanup packer files
     file:
       path: /tmp/packer
       state: absent
-
   when: image_dir_empty == 0
 
 - name: Ensure dedicated terraform user exists
