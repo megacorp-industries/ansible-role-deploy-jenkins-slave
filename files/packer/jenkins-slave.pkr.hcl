@@ -33,11 +33,6 @@ variable "ram" {
   default = "2048"
 }
 
-variable "version" {
-  type    = string
-  default = ""
-}
-
 source "qemu" "jenkins-slave" {
   accelerator            = "kvm"
   boot_command           = ["<esc><esc><esc><esc>e<wait>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>", "<del><del><del><del><del><del><del><del>",
@@ -58,7 +53,7 @@ source "qemu" "jenkins-slave" {
   iso_checksum           = var.iso_checksum
   iso_url                = var.iso_url
   net_device             = "virtio-net"
-  output_directory       = "artifacts/${var.name}${var.version}"
+  output_directory       = "artifacts/${var.name}"
   qemu_binary            = "/usr/bin/qemu-system-x86_64"
   qemuargs               = [["-m", "${var.ram}M"], ["-smp", "${var.cpu}"]]
   shutdown_command       = "echo 'changeme' | sudo -S shutdown -P now"
@@ -79,7 +74,7 @@ build {
 
   provisioner "ansible-local" {
     playbook_dir  = "ansible"
-    galaxy_file   = "ansible/requirements.yml"
+    galaxy_file   = "ansible/requirements.yml" #this only works with packer 1.8.2
     playbook_file = "ansible/playbook.yml"
   }
 
