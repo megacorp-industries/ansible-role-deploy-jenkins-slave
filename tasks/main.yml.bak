@@ -17,33 +17,26 @@
     allow_downgrade: yes
     update_cache: yes
 
-- name: Check if libvirt images directory is empty
-  stat:
-    path: /var/lib/libvirt/images
-    register: image_dir_empty
+- name: Make temporary working directory for packer
+  file:
+    path: /tmp/packer
+    state: directory
 
-block:
-  - name: Make temporary working directory for packer
-    file:
-      path: /tmp/packer
-      state: directory
-  
-  - name: Copy all packer files to new working directory
-    copy:
-      src: files/packer
-      dest: /tmp
-  
-  - name: Build packer image (this will take a while)
-    command: packer build .
-    args:
-      chdir: /tmp/packer
-  
-  - name: Copy packer image to libvirt image directory
-    copy:
-      remote_src: true
-      src: /tmp/packer/artifacts/jenkins-slave/packer-jenkins-slave
-      dest: /var/lib/libvirt/images
-when: image_dir_empty == 0
+- name: Copy all packer files to new working directory
+  copy:
+    src: files/packer
+    dest: /tmp
+
+- name: Build packer image (this will take a while)
+  command: packer build .
+  args:
+    chdir: /tmp/packer
+
+- name: Copy packer image to libvirt image directory
+  copy:
+    remote_src: true
+    src: /tmp/packer/artifacts/jenkins-slave/packer-jenkins-slave
+    dest: /var/lib/libvirt/images
 
 - name: Ensure dedicated terraform user exists
   user:

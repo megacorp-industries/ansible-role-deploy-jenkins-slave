@@ -20,7 +20,7 @@
   - name: Install Packer and Terraform
     apt:
       name: 
-        - packer={{ packer_version }}
+        - packer=1.8.2-1
         - terraform
       allow_downgrade: yes
       update_cache: yes
