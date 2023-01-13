@@ -60,6 +60,12 @@
     group: terraform
     mode: "644"
 
+- name: Destroy jenkins slave using terraform
+  become_user: terraform
+  terraform:
+    project_path: /home/terraform/jenkins-slave
+    state: absent
+  
 - name: Deploy jenkins slave using terraform
   become_user: terraform
   terraform:
