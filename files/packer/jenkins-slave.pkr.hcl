@@ -35,7 +35,7 @@ variable "ram" {
 
 variable "version" {
   type    = string
-  default = "0.1"
+  default = ""
 }
 
 source "qemu" "jenkins-slave" {
